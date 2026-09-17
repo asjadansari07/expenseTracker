@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Spendly — Track Every Rupee{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-badge">
+            <span class="badge-dot">●</span>
+            Free to use · No credit card needed
+        </div>
+        <h1 class="hero-title">
+            Track every rupee.<br>
+            <span class="hero-title-accent">Know where it goes.</span>
+        </h1>
+        <p class="hero-subtitle">
+            Spendly helps you log expenses, spot patterns, and stay
+            on budget — without the spreadsheet headache.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
+            <button type="button" class="btn-secondary" id="openVideoModal">See how it works</button>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="mock-dashboard">
+            <div class="mock-browser-bar">
+                <span class="mock-dot mock-dot-red"></span>
+                <span class="mock-dot mock-dot-yellow"></span>
+                <span class="mock-dot mock-dot-green"></span>
+            </div>
+            <div class="mock-stats">
+                <div class="mock-stat-card">
+                    <div class="mock-stat-label">This month</div>
+                    <div class="mock-stat-value">₹18,240</div>
+                    <div class="mock-stat-change mock-stat-up">+12% vs last</div>
+                </div>
+                <div class="mock-stat-card">
+                    <div class="mock-stat-label">Budget left</div>
+                    <div class="mock-stat-value">₹6,760</div>
+                    <div class="mock-stat-change mock-stat-down">43% remaining</div>
+                </div>
+                <div class="mock-stat-card">
+                    <div class="mock-stat-label">Transactions</div>
+                    <div class="mock-stat-value">34</div>
+                    <div class="mock-stat-meta">this month</div>
+                </div>
+            </div>
+            <div class="mock-categories">
+                <div class="mock-category-row">
+                    <span class="mock-category-label">Food</span>
+                    <div class="mock-category-track">
+                        <div class="mock-category-bar mock-bar-orange" style="width: 78%"></div>
+                    </div>
+                </div>
+                <div class="mock-category-row">
+                    <span class="mock-category-label">Travel</span>
+                    <div class="mock-category-track">
+                        <div class="mock-category-bar mock-bar-blue" style="width: 52%"></div>
+                    </div>
+                </div>
+                <div class="mock-category-row">
+                    <span class="mock-category-label">Bills</span>
+                    <div class="mock-category-track">
+                        <div class="mock-category-bar mock-bar-purple" style="width: 38%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features" id="features">
+    <div class="features-inner">
+        <div class="feature-card">
+            <div class="feature-icon">₹</div>
+            <h3 class="feature-title">Log expenses instantly</h3>
+            <p class="feature-body">Add any expense in seconds. Category, amount, date, description — all in one simple form.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">◎</div>
+            <h3 class="feature-title">Understand your patterns</h3>
+            <p class="feature-body">See exactly where your money goes with category breakdowns and monthly summaries.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">◷</div>
+            <h3 class="feature-title">Filter by time period</h3>
+            <p class="feature-body">View your spending for any date range — last week, last month, or a custom period.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2 class="cta-title">Ready to take control?</h2>
+        <p class="cta-body">Join thousands of people who track their expenses with Spendly.</p>
+        <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
+    </div>
+</section>
+
+<!-- Video Modal -->
+<div id="videoModal" class="video-modal" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle" aria-hidden="true">
+    <div class="video-modal-backdrop" aria-hidden="true"></div>
+    <div class="video-modal-content">
+        <button type="button" class="video-modal-close" aria-label="Close video modal">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h2 id="videoModalTitle" class="video-modal-title sr-only">How Spendly Works</h2>
+        <div class="video-modal-wrapper">
+            <div class="video-container">
+                <!-- YouTube video ID is set in main.js - change VIDEO_ID variable to update -->
+                <iframe
+                    id="videoFrame"
+                    width="560"
+                    height="315"
+                    src=""
+                    title="How Spendly Works"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
