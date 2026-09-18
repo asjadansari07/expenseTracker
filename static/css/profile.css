@@ -1,0 +1,262 @@
+/* ------------------------------------------------------------------ */
+/* Profile page                                                        */
+/* ------------------------------------------------------------------ */
+
+.profile-section {
+    min-height: calc(100vh - 60px - 100px);
+    padding: 3rem 2rem;
+}
+
+.profile-container {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* Identity header                                                     */
+/* ------------------------------------------------------------------ */
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.profile-avatar {
+    flex-shrink: 0;
+    width: 76px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 50%;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    user-select: none;
+}
+
+/* Without min-width:0 the flex item refuses to shrink past its content,
+   so a long email would push the page wider than the viewport. */
+.profile-identity { min-width: 0; }
+
+.profile-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    overflow-wrap: break-word;
+}
+
+.profile-email {
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+    overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------------ */
+/* Account details card                                                */
+/* ------------------------------------------------------------------ */
+
+.profile-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.profile-card-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+}
+
+.profile-details { margin: 0; }
+
+.profile-detail-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 1rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.profile-detail-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.profile-detail-row dt {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+}
+
+.profile-detail-row dd {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sign out                                                            */
+/* ------------------------------------------------------------------ */
+
+.profile-actions {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-soft);
+}
+
+.profile-actions .btn-secondary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Recent expenses                                                     */
+/* ------------------------------------------------------------------ */
+
+.profile-expenses { margin-top: 1.5rem; }
+
+.profile-expenses-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+/* The title carries its own bottom margin in the details card; inside
+   this flex row the row's margin owns the spacing instead. */
+.profile-expenses-head .profile-card-title { margin-bottom: 0; }
+
+.profile-expense-total {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+    white-space: nowrap;
+}
+
+.profile-expense-list {
+    list-style: none;
+    margin: 0;
+}
+
+.profile-expense-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.profile-expense-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* min-width:0 lets a long description shrink instead of pushing the
+   amount off the card. */
+.profile-expense-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.profile-expense-description {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+}
+
+.profile-expense-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+}
+
+.profile-expense-category {
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.profile-expense-date { white-space: nowrap; }
+
+.profile-expense-amount {
+    flex-shrink: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.profile-expense-empty {
+    padding: 0.875rem 0;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+}
+
+.profile-expense-note {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-soft);
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive                                                          */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 600px) {
+    .profile-section { padding: 2rem 1.25rem; }
+
+    /* Stack the avatar above the name, and centre the pair. */
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .profile-avatar {
+        width: 64px;
+        height: 64px;
+        font-size: 1.35rem;
+    }
+
+    .profile-card { padding: 1.5rem; }
+
+    /* Two columns stop fitting around 375px, so label sits above value. */
+    .profile-detail-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+
+    /* The title and the running total no longer fit on one line. */
+    .profile-expenses-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
