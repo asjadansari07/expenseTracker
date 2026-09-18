@@ -1,7 +1,13 @@
 import os
 
-from flask import Flask, render_template, request, redirect, url_for, flash
-from database.db import get_db, init_db, seed_db, create_user
+from flask import (
+    Flask, render_template, request, redirect, url_for, flash, session
+)
+from werkzeug.security import check_password_hash
+
+from database.db import (
+    get_db, init_db, seed_db, create_user, get_user_by_email
+)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-not-for-production")
@@ -72,9 +78,34 @@ def register():
     return redirect(url_for("login"))
 
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    if session.get("user_id"):
+        return redirect(url_for("landing"))
+
+    if request.method != "POST":
+        return render_template("login.html")
+
+    email = request.form.get("email", "").strip()
+    password = request.form.get("password", "")
+
+    # One generic message for every failure below, so the form cannot be
+    # used to find out which emails have accounts.
+    error = "Invalid email or password."
+
+    if not email or not password:
+        return render_template("login.html", error=error, email=email), 400
+
+    user = get_user_by_email(email)
+    if user is None or not check_password_hash(user["password_hash"], password):
+        return render_template("login.html", error=error, email=email), 400
+
+    # Clear first so a pre-existing anonymous session is never promoted.
+    session.clear()
+    session["user_id"] = user["id"]
+    session["user_name"] = user["name"]
+
+    return redirect(url_for("landing"))
 
 
 @app.route("/terms-and-conditions")
@@ -93,7 +124,9 @@ def privacy_policy():
 
 @app.route("/logout")
 def logout():
-    return "Logout — coming in Step 3"
+    session.clear()
+    flash("You have been signed out.", "success")
+    return redirect(url_for("login"))
 
 
 @app.route("/profile")

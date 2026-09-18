@@ -108,3 +108,22 @@ def create_user(name, email, password):
         return None
     finally:
         conn.close()
+
+
+def get_user_by_email(email):
+    """Returns the user row matching an email, or None if there is no match.
+
+    Normalises the same way create_user() does, so a user who registered as
+    'Nitish@Example.com' can still sign in with any casing. Returns the row
+    as-is (including password_hash) and makes no authentication decision.
+    """
+    conn = get_db()
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT * FROM users WHERE email = ?",
+            (email.strip().lower(),)
+        )
+        return cursor.fetchone()
+    finally:
+        conn.close()
