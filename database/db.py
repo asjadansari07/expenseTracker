@@ -110,6 +110,22 @@ def create_user(name, email, password):
         conn.close()
 
 
+def get_user_by_id(user_id):
+    """Returns the user row matching an id, or None if there is no match.
+
+    Returns the row as-is (including password_hash) and makes no
+    authorisation decision — it does not care whether the id came from a
+    session, and it does not filter or reshape the row.
+    """
+    conn = get_db()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+        return cursor.fetchone()
+    finally:
+        conn.close()
+
+
 def get_user_by_email(email):
     """Returns the user row matching an email, or None if there is no match.
 

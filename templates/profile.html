@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Your profile — Spendly{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{# Two initials from the first two words of the name. A one-word or empty
+   name would only give one letter, so fall back to the email, then to the
+   brand glyph — the page must render whatever the row holds. #}
+{% set name_parts = (user.name or '').split() %}
+{% if name_parts|length > 1 %}
+    {% set initials = name_parts[0][0] ~ name_parts[1][0] %}
+{% elif user.email %}
+    {% set initials = user.email[0] %}
+{% else %}
+    {% set initials = '◈' %}
+{% endif %}
+
+<section class="profile-section">
+    <div class="profile-container">
+
+        <div class="profile-header">
+            <div class="profile-avatar" aria-hidden="true">{{ initials|upper }}</div>
+            <div class="profile-identity">
+                <h1 class="profile-name">{{ user.name }}</h1>
+                <p class="profile-email">{{ user.email }}</p>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <h2 class="profile-card-title">Account details</h2>
+
+            <dl class="profile-details">
+                <div class="profile-detail-row">
+                    <dt>Name</dt>
+                    <dd>{{ user.name }}</dd>
+                </div>
+                <div class="profile-detail-row">
+                    <dt>Email</dt>
+                    <dd>{{ user.email }}</dd>
+                </div>
+                <div class="profile-detail-row">
+                    <dt>Member since</dt>
+                    <dd>{{ user.created_at|date_display }}</dd>
+                </div>
+            </dl>
+
+            <div class="profile-actions">
+                <a href="{{ url_for('logout') }}" class="btn-secondary">Sign out</a>
+            </div>
+        </div>
+
+        {# Hardcoded sample rows passed by the view — not read from the
+           expenses table yet. Same for every signed-in user, so the note
+           below is what stops them reading as real records. #}
+        <div class="profile-card profile-expenses">
+            <div class="profile-expenses-head">
+                <h2 class="profile-card-title">Recent expenses</h2>
+                {% if expenses %}
+                <span class="profile-expense-total">
+                    {{ expenses|sum(attribute='amount')|inr }} total
+                </span>
+                {% endif %}
+            </div>
+
+            <ul class="profile-expense-list">
+                {% for expense in expenses %}
+                <li class="profile-expense-row">
+                    <div class="profile-expense-main">
+                        <span class="profile-expense-description">{{ expense.description }}</span>
+                        <span class="profile-expense-meta">
+                            <span class="profile-expense-category">{{ expense.category }}</span>
+                            <span class="profile-expense-date">{{ expense.date|date_short }}</span>
+                        </span>
+                    </div>
+                    <span class="profile-expense-amount">{{ expense.amount|inr }}</span>
+                </li>
+                {% else %}
+                <li class="profile-expense-empty">No expenses to show yet.</li>
+                {% endfor %}
+            </ul>
+
+            <p class="profile-expense-note">
+                Sample data for {{ user.name }} — not yet saved to your account.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
