@@ -3,7 +3,8 @@
     "allow": [
       "WebSearch",
       "Bash(git init)",
-      "Bash(echo \"exit=$?\")"
+      "Bash(echo \"exit=$?\")",
+      "mcp__sqlite__read_query"
     ]
   }
 }
